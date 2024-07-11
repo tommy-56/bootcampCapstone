@@ -2,9 +2,10 @@ from kafka import KafkaProducer
 import time, os, docker
 
 print("Starting Script")
+time.sleep(10) #Waiting for Kafka to fully boot up
 # Kafka broker address
 bootstrap_servers = 'kafka-server:9092'
-time.sleep(5) #Waiting for Kafka to fully boot up
+
 
 # Initialize Kafka producer
 producer = KafkaProducer(bootstrap_servers=bootstrap_servers)

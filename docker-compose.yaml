@@ -40,7 +40,9 @@ services:
     environment:
       EULA: "TRUE"
     volumes:
-    - minecraft_data:/data
+      - type: bind
+        source: C:\Users\TAPC\Documents\mc_data_proto
+        target: /data
 
   kafka-producer:
     build: ./mc_producer

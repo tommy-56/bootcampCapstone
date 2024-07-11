@@ -6,7 +6,7 @@ import time
 
 # Initialize Docker client
 client = docker.from_env()
-
+time.sleep(10) #Waiting for Kafka to fully boot up
 # Kafka broker address
 bootstrap_servers = 'kafka-server:9092'
 
