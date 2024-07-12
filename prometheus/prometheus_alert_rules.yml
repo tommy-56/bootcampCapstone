@@ -1,0 +1,6 @@
+groups:
+ - name: Cadmin is Up
+   rules:
+   - alert: AdvisorUp
+     expr: up{job="cadvisor"} == 1
+     for: 5s
