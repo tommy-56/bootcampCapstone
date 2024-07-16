@@ -1,6 +1,6 @@
 groups:
- - name: Cadmin is Up
+ - name: cAdvisor Down
    rules:
-   - alert: AdvisorUp
-     expr: up{job="cadvisor"} == 1
+   - alert: AdvisorDown
+     expr: up{job="cadvisor"} == 0
      for: 5s
