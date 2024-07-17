@@ -41,7 +41,7 @@ services:
       EULA: "TRUE"
     volumes:
       - type: bind
-        source: C:\Users\TAPC\Documents\mc_data_proto
+        source: C:\Users\cgrey\Documents\mc_data_proto
         target: /data
     #Optional, was just trying to limit some memory/cpu usage on my machine
     deploy:
@@ -127,13 +127,36 @@ services:
       - grafana-storage:/var/lib/grafana
       #is persistent so we dont loose dashboards we made
       - type: bind
-        source: C:\Users\TAPC\Documents\grafana_proto
+        source: C:\Users\cgrey\Documents\grafana_proto
         target: /var/lib/grafana
     networks:
       - my-network
     depends_on:
     - prometheus
-
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - my-network
+  connect:
+    image: debezium/connect:1.3
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka-server:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+      KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+    networks:
+      - my-network
+    depends_on:
+      - kafka-producer-docker-metrics
+      - mongodb
 networks:
   my-network:
     driver: bridge
