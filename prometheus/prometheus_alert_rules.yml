@@ -1,6 +1,15 @@
 groups:
- - name: cAdvisor Down
-   rules:
-   - alert: AdvisorDown
-     expr: up{job="cadvisor"} == 0
-     for: 5s
+  - name: Container Down
+    rules:
+      - alert: cAdvisorDown
+        expr: up{job="cadvisor"} == 0
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: cAdvisor Container is Down
+
+  - name: container_rules
+    rules:
+      - record: container:up
+        expr: (sum(max_over_time(container_last_seen{image!=""}[15s])) by (container_label_com_docker_compose_service))
