@@ -24,7 +24,7 @@ def fetch_minecraft_logs():
 
 def fetch_container_logs():
     print("Getting Container Logs")
-    container_name = "capstone-minecraft-1"
+    container_name = "bootcampcapstone-minecraft-1"
     try:
         client = docker.from_env()
         container = client.containers.get(container_name)
