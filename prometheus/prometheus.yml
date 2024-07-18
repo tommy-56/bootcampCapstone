@@ -23,4 +23,4 @@ scrape_configs:
         - syntheticmetrics:9999
   - job_name: 'minecraft'
     static_configs:
-      - targets: ['minecraft:19565']  # Replace with your Minecraft server's container name and port
+      - targets: minecraft:19565  # Replace with your Minecraft server's container name and port
