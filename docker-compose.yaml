@@ -36,19 +36,25 @@ services:
     # Port Mappings
     ports:
       - "25565:25565"
+      - "19565:19565" # prometheus port
     # Environment Variables
+    env_file: .env # stores minecraft environment variables
     environment:
       EULA: "TRUE"
     volumes:
+      - minecraft_data:/minecraft_logs
+      - ./mods:/data/mods
+      - ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
+      #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
-        source: C:\Users\TAPC\Documents\mc_data_proto
+        source: C:\Users\TAPC\Documents\mc_data_LIVE # Change to match folder on your machine
         target: /data
-    #Optional, was just trying to limit some memory/cpu usage on my machine
+    #Don't remove but if you need you can adjust this if its overloading your system
     deploy:
       resources:
         limits:
-          cpus: "1" #allowed 1 cpu core of time
-          memory: "3g"
+          cpus: "2" #allowed 2 cpu core of time
+          memory: "5g"
     networks:
       - my-network
 
@@ -137,8 +143,9 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
       #is persistent so we dont loose dashboards we made
+      #Can comment this out but you will loose any dashbaords you create in grafana when you docker compose down
       - type: bind
-        source: C:\Users\TAPC\Documents\grafana_proto
+        source: C:\Users\TAPC\Documents\grafana_LIVE #Change path to match a folder on your machine
         target: /var/lib/grafana
     networks:
       - my-network

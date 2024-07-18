@@ -11,7 +11,7 @@ producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
 # Function to fetch Minecraft logs from a shared volume
 def fetch_minecraft_logs():
-    print(os.listdir('/data/logs'))
+    #print(os.listdir('/data/logs'))
     # Path to Minecraft logs within the shared volume
     log_file_path = '/minecraft_logs/logs/latest.log'
     
@@ -24,7 +24,7 @@ def fetch_minecraft_logs():
 
 def fetch_container_logs():
     print("Getting Container Logs")
-    container_name = "capstone-minecraft-1"
+    container_name = "bootcampcapstone-minecraft-1"
     try:
         client = docker.from_env()
         container = client.containers.get(container_name)
@@ -50,7 +50,7 @@ def send_logs_to_kafka(log_message):
 #Everytime MC reboots it zips the log file and we don't get the data about the reboot from the latest.log file
 def send_container_logs_to_kafka(log_message):
     try:
-        producer.send('docker_logs_topic', log_message.encode('utf-8'))
+        producer.send('minecraft_new_logs_topic', log_message.encode('utf-8'))
         producer.flush()
     except Exception as e:
         print(f'Error Occured Sending Container Logs to Kafka will retry: {e}')
