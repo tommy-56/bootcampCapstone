@@ -44,6 +44,7 @@ services:
     volumes:
       - minecraft_data:/minecraft_logs
       - ./mods:/data/mods
+      - ${PWD}/Exclude.json:/data
       - ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
       #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
@@ -54,7 +55,7 @@ services:
       resources:
         limits:
           cpus: "2" #allowed 2 cpu core of time
-          memory: "5g"
+          memory: "1g"
     networks:
       my-network:
         aliases:
