@@ -48,31 +48,46 @@ def simulate_bad_environment():
 	print("Simulating Bad Environment")
 	#Set Allocations for each metric
 	#cpu_usage.labels(mode='idle').set(10) # change later not sure how it works yet
-	#Define Metrics
+	#Define Metrics Memory
 	mem_avail_mc = GaugeMetrics('syn_memoryAvail_mc', 'Total Available Memory', 'minecraft').create_metric()
 	mem_used_mc = GaugeMetrics('syn_memoryUsage_mc', 'Total Used Memory', 'minecraft').create_metric()
 
+	#DB Metrics
 	storage_avail_mongo = GaugeMetrics('syn_fsAvailable_mongodb', 'Total Storage Available', 'MongoDB').create_metric()
 	storage_used_mongo = GaugeMetrics('syn_fsUsage_mongodb', 'Total Storage Used', 'MongoDB').create_metric()
 	storage_avail_sql = GaugeMetrics('syn_fsAvailable_sql', 'Total Storage Available', 'SQL').create_metric()
 	storage_used_sql = GaugeMetrics('syn_fsUsage_sql', 'Total Storage Used', 'SQL').create_metric()
 
-	#Set starting usage values
-	mem_avail_mc.set(2000*byteUnit) #2GB
-	mem_used_mc.set(0) 
-	storage_avail_mongo.set(10000*byteUnit) #10GB
-	storage_used_mongo.set(9000*byteUnit) # start at 1GB
-	storage_avail_sql.set(10000*byteUnit)
-	storage_used_sql.set(9000*byteUnit)
+	#Container Status (To simulate a Container going down)
+	mc_up = GaugeMetrics('syn_mcUP_mc', 'Up Status', 'minecraft').create_metric()
+	mongo_up = GaugeMetrics('syn_mongoUP', 'Up Status', 'mongoDB').create_metric()
+	sql_up = GaugeMetrics('syn_sqlUP', 'Up Status', 'SQL').create_metric()
 
-	#change this to a for in range since we have even numbers to increase to
-	while True: #Simulate resources slowy becoming used over time
-		time.sleep(20)
-		#Start "Using resources"
-		mem_used_mc.inc(500*byteUnit) #increase by 500MB
-		storage_used_mongo.inc(500*byteUnit)
-		storage_used_sql.inc(500*byteUnit)
+	while True:
+		#Set starting usage values
+		mem_avail_mc.set(2000*byteUnit) #2GB
+		mem_used_mc.set(0) 
+		storage_avail_mongo.set(10000*byteUnit) #10GB
+		storage_used_mongo.set(1000*byteUnit) # start at 1GB
+		storage_avail_sql.set(10000*byteUnit)# 10GB
+		storage_used_sql.set(1000*byteUnit) # start at 1GB
 
+		#1 is Up 0 is Down
+		mc_up.set(1)
+		mongo_up.set(1)
+		sql_up.set(1)
+
+		for i in range(1,19): #Simulate resources slowy becoming used over time
+			time.sleep(5)
+			#Start "Using resources"
+			mem_used_mc.inc(112*byteUnit) #increase by 500MB
+			storage_used_mongo.inc(500*byteUnit)
+			storage_used_sql.inc(500*byteUnit)
+
+		mc_up.set(0)
+		sql_up.set(0)
+
+		time.sleep(300) # repeat simulation every 5 min
 
 
 if __name__ == '__main__':
