@@ -135,7 +135,7 @@ services:
       #is persistent so we dont loose dashboards we made
       #Can comment this out but you will loose any dashbaords you create in grafana when you docker compose down
       - type: bind
-        source: C:\Users\TAPC\Documents\GitHub\bootcampCapstone\Grafana #Change path to match a folder on your machine
+        source: ./Grafana #Folder In Github Repo
         target: /var/lib/grafana
     networks:
       - my-network
