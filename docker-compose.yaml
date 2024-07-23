@@ -47,13 +47,13 @@ services:
       #- ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
       #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
-        source: ./mc_data_LIVE # Change to match folder on your machine
+        source: ./mc_data_LIVE #Changed to folder in repo
         target: /data
     #Don't remove but if you need you can adjust this if its overloading your system
     deploy:
       resources:
         limits:
-          cpus: "2" #allowed 2 cpu core of time
+          cpus: "2" #Allows number of cores in terms of cpu time 
           memory: "2g"
     networks:
       my-network:
@@ -133,7 +133,6 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
       #is persistent so we dont loose dashboards we made
-      #Can comment this out but you will loose any dashbaords you create in grafana when you docker compose down
       - type: bind
         source: ./Grafana #Folder In Github Repo
         target: /var/lib/grafana
