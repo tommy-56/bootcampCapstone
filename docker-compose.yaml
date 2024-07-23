@@ -180,7 +180,7 @@ services:
       - my-network
     depends_on:
       - kafka-producer-docker-metrics
-      - mongodb
+      - mongo1
     volumes:
       - ./plugins:/usr/share/java
 networks:
