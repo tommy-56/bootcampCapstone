@@ -47,7 +47,7 @@ services:
       - ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
       #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
-        source: C:\Users\TAPC\Documents\mc_data_LIVE # Change to match folder on your machine
+        source: C:\Users\cgrey\Documents\mc_data_LIVE # Change to match folder on your machine
         target: /data
     #Don't remove but if you need you can adjust this if its overloading your system
     deploy:
@@ -147,18 +147,21 @@ services:
       #is persistent so we dont loose dashboards we made
       #Can comment this out but you will loose any dashbaords you create in grafana when you docker compose down
       - type: bind
-        source: C:\Users\TAPC\Documents\GitHub\bootcampCapstone\Grafana #Change path to match a folder on your machine
+        source: C:\Users\cgrey\Documents\bootcampCapstone\Grafana #Change path to match a folder on your machine
         target: /var/lib/grafana
     networks:
       - my-network
     depends_on:
     - prometheus
-  mongodb:
+  mongo1:
     image: mongo
+    container_name: mongo1
     ports:
-      - "27017:27017"
+      - "35001:27017"
     networks:
       - my-network
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
   connect:
     image: debezium/connect:1.3
     ports:
@@ -172,11 +175,14 @@ services:
       KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
       VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
       VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_PLUGIN_PATH: "/usr/share/java"
     networks:
       - my-network
     depends_on:
       - kafka-producer-docker-metrics
       - mongodb
+    volumes:
+      - ./plugins:/usr/share/java
 networks:
   my-network:
     driver: bridge
