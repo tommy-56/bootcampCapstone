@@ -166,7 +166,7 @@ services:
     networks:
       - my-network
     depends_on:
-      - mongodb
+      - mongo1
     volumes:
       - ./plugins:/usr/share/java
 networks:

@@ -65,6 +65,7 @@ def simulate_bad_environment():
 	storage_avail_sql.set(10000*byteUnit)
 	storage_used_sql.set(9000*byteUnit)
 
+	#change this to a for in range since we have even numbers to increase to
 	while True: #Simulate resources slowy becoming used over time
 		time.sleep(20)
 		#Start "Using resources"
