@@ -8,6 +8,39 @@ groups:
           severity: critical
         annotations:
           summary: cAdvisor Container is Down
+      - alert: Synthetic Metrics is Down
+        expr: up{job="synthetic-metric"}==0
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Conatainer is down: {{ $labels.instance }}"
+          description: "The endpoint {{ $labels.instance }} is not able to be scraped by Prometheus."
+  - name: Memory Alerts
+    rules:
+      - alert: Memory Resources Exhausted
+        expr: syn_memoryUsage_mc >= 2000000000
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: Minecraft Server Memory Resources are Fully Used
+  - name: Storage Alerts
+    rules:
+      - alert: File Stoarge Is Full MongoDB
+        expr: syn_fsUsage_mongodb >= syn_fsAvailable_mongodb
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: Storage space used is at the max of 10GB for MongoDB
+      - alert: File Stoarge Is Full SQL
+        expr: syn_fsUsage_sql >= syn_fsAvailable_sql
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: Storage space used is at the max of 10GB for SQL 
 
   - name: container_rules
     rules:
