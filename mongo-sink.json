@@ -1,0 +1,13 @@
+{
+    "name": "mongo-sink-connector",
+    "config": {
+      "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+      "tasks.max": "1",
+      "topics": "minecraft_logs_new_topic",
+      "connection.uri": "mongodb://mongo1",
+      "database": "minecraft_db",
+      "collection": "minecraft_collection",
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+    }
+  }
