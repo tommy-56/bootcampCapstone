@@ -1,0 +1,5 @@
+
+[Goats]
+	#Enable the shearing of Goats.  Default: true
+	enableShearing = true
+

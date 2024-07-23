@@ -44,7 +44,7 @@ services:
     volumes:
       - minecraft_data:/minecraft_logs
       - ./mods:/data/mods
-      - ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
+      #- ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
       #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
         source: ./mc_data_LIVE # Change to match folder on your machine
@@ -163,7 +163,6 @@ services:
     networks:
       - my-network
     depends_on:
-      - kafka-producer-docker-metrics
       - mongodb
 networks:
   my-network:
