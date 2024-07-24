@@ -1,8 +1,7 @@
 from kafka import KafkaProducer
 from kafka.errors import NoBrokersAvailable
 import time, os, docker
-
-
+import mongo_sql_producer
 
 #Get logs from the minecraft container
 def fetch_minecraft_logs():
@@ -24,6 +23,8 @@ def fetch_minecraft_logs():
 
 # Via the Kafka Producer send logs to kafka topic
 def send_logs_to_kafka(log_message):
+    var = mongo_sql_producer.MongoProducer()
+    var.insert_to_mongo(log_message)
     try:
         producer.send('minecraft_new_logs_topic', log_message.encode('utf-8'))
         producer.flush()
