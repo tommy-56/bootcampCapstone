@@ -25,7 +25,3 @@ scrape_configs:
     static_configs:
       - targets: 
         - minecraft:19565  # Replace with your Minecraft server's container name and port
-  - job_name: 'kafka-server'
-    static_configs:
-      - targets: 
-        - kafka-server:9092

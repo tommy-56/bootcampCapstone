@@ -1,5 +1,5 @@
 groups:
-  - name: Container Down
+  - name: Container Down Live
     rules:
       - alert: cAdvisorDown
         expr: up{job="cadvisor"} == 0
@@ -19,7 +19,7 @@ groups:
   - name: Memory Alerts
     rules:
       - alert: Memory Resources Exhausted
-        expr: syn_memoryUsage_mc >= 2000000000
+        expr: syn_memoryUsage_mc >= syn_memoryAvail_mc
         for: 0s
         labels:
           severity: critical
@@ -40,7 +40,33 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: Storage space used is at the max of 10GB for SQL 
+          summary: Storage space used is at the max of 10GB for SQL
+  - name: Container Down
+    rules:
+      - alert: Minecraft Server Container is Down
+        expr: syn_mcUP_mc == 0
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: Minecraft Server Container is Down 
+          description: Can not scrape data from Minecraft Server
+      - alert: MongoDB Container is Down
+        expr: syn_mongoUP == 0
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: MongoDB Server Container is Down 
+          description: Can not scrape data from MongoDB Container
+      - alert: SQL Container is Down
+        expr: syn_sqlUP == 0
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: SQL Container is Down 
+          description: Can not scrape data from SQL Container
 
   - name: container_rules
     rules:
