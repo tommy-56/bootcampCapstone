@@ -6,5 +6,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY producer_script.py .
+COPY mongo_sql_producer.py .
 
 CMD ["python", "-u", "./producer_script.py"]
+
+#CMD ["python", "-u", "./mongo_sql_producer.py"]
