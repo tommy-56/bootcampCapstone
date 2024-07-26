@@ -149,6 +149,25 @@ services:
       - my-network
     volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+  mysql:
+    build: ./mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+
+  mongo_sql_producer:
+    build: ./mongo_sql_producer
+    command: sh -c "sleep 10s ; python3 ./mongo_sql_producer.py"
+    container_name: mongo_sql_producer
+    working_dir: /app
+    networks:
+      - my-network
+    depends_on:
+      - kafka-server
+      - minecraft
 networks:
   my-network:
     driver: bridge
@@ -157,3 +176,4 @@ volumes:
   minecraft_data:
     driver: local
   grafana-storage: {}
+  db_data:
