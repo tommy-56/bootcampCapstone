@@ -1,7 +1,8 @@
 # bootcampCapstone
-#To run
+
+# To run
 docker compose up --build -d
-#Component List
+# Component List
 
 The following is a list and explanation of the technologies running in our project. Each of these components is running in a docker container within a docker compose project. 
 
