@@ -59,20 +59,28 @@ for message in consumer:
             INSERT INTO Logs (_id, TimestampServer, LogLevel, Source, Message)
             VALUES (%s, %s, %s, %s, %s)
             """
+            matchdict = match.groupdict()
+            _id = collection.insert_one(matchdict)
 
-            collection.insert_one(match.groupdict())
-            #Getting the id of the last inserted document
-            mongo_document = collection.find({}).sort({_id:-1}).limit(1)
             values = (
-                str(mongo_document["_id"]),
-                mongo_document["TimestampServer"],
-                mongo_document["LogLevel"],
-                mongo_document["Source"],
-                mongo_document["Message"]
+                str(_id),
+                matchdict["TimestampServer"],
+                matchdict["LogLevel"],
+                matchdict["Source"],
+                matchdict["Message"]
             )
             mysql_cursor.execute(sql_insert_query, values)
-            mysql_connection.commit()
+
     break
+mysql_connection.commit()
+
+mysql_cursor.execute("SELECT * FROM Logs")
+
+myresult = mysql_cursor.fetchall()
+
+for x in myresult:
+  print(x)
+
 
 # Close the MongoDB client
 mongo_client.close()
