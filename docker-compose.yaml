@@ -163,7 +163,6 @@ services:
 
   mongo_sql_producer:
     build: ./mongo_sql_producer
-    command: sh -c "sleep 10s ; python3 ./mongo_sql_producer.py"
     container_name: mongo_sql_producer
     working_dir: /app
     networks:

@@ -13,13 +13,20 @@ mongo_connection_string = 'mongodb://mongo1:27017/'
 mongo_db_name = 'minecraft_db'
 mongo_collection_name = 'minecraft_collection'
 
-#Make the sql connection
-mysql_connection = mysql.connector.connect(user='root', password='root', host='mysql', port="3306", database='db')
-mysql_cursor = mysql_connection.cursor()
-print("DB connected")
-
 # Create Kafka consumer
 kafka_healthy = False
+sql_healthy = False
+
+while sql_healthy == False:
+    try:
+        mysql_connection = mysql.connector.connect(user='root', password='root', host='mysql', port="3306", database='db')
+        mysql_cursor = mysql_connection.cursor()
+        print("DB connected")
+        sql_healthy = True
+    except:
+        print("Connection Error... retrying")
+        time.sleep(5)
+
 
 while kafka_healthy == False:
     try:
