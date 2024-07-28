@@ -47,7 +47,7 @@ services:
       - ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
       #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
-        source: C:\Users\Humberto\Documents\mc_data_LIVE #Working on a better fix here 
+        source: C:\Users\cgrey\Documents\mc_data_LIVE #Working on a better fix here 
         target: /data
     #Don't remove but if you need you can adjust this if its overloading your system
     deploy:

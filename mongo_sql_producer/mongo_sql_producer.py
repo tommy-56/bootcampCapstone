@@ -63,14 +63,14 @@ for message in consumer:
             _id = collection.insert_one(matchdict)
 
             values = (
-                str(_id),
+                str(_id.inserted_id),
                 matchdict["TimestampServer"],
                 matchdict["LogLevel"],
                 matchdict["Source"],
                 matchdict["Message"]
             )
             mysql_cursor.execute(sql_insert_query, values)
-
+ 
     break
 mysql_connection.commit()
 
