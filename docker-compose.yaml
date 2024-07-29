@@ -171,6 +171,14 @@ services:
       - kafka-server
       - minecraft
       - mysql
+  sql_demo:
+    build: ./sql_demo
+    container_name: sql_demo
+    working_dir: /app
+    networks:
+      - my-network
+    depends_on:
+      - mysql
 networks:
   my-network:
     driver: bridge
