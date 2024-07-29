@@ -47,7 +47,7 @@ services:
       - ${PWD}/server/minecraft_server.1.20.1.jar:/data #if for whatever reason ${PWD} doesn't work, change ${PWD} to . for the relative directory
       #Can be commented out if yyou dont need persistent storage of MC data
       - type: bind
-        source: C:\Users\cgrey\Documents\mc_data_LIVE #Working on a better fix here 
+        source: C:\Users\humbe\Documents\mc_data_LIVE #Working on a better fix here 
         target: /data
     #Don't remove but if you need you can adjust this if its overloading your system
     deploy:
@@ -140,6 +140,7 @@ services:
       - my-network
     depends_on:
     - prometheus
+
   mongo1:
     image: mongo
     container_name: mongo1
@@ -149,6 +150,7 @@ services:
       - my-network
     volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
   mysql:
     build: ./mysql
     container_name: mysql
@@ -159,7 +161,7 @@ services:
       MYSQL_DATABASE: 'db'
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - '3306:3306'
+      - '3307:3307'
 
   mongo_sql_producer:
     build: ./mongo_sql_producer
