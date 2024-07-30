@@ -1,4 +1,4 @@
-# bootcampCapstone
+# Real Time Minecraft Server Log Processing and System Analysis
 
 # To run
 docker compose up --build -d
