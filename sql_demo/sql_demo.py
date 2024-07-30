@@ -14,7 +14,7 @@ while sql_healthy == False:
         time.sleep(5)
 
 
-# The name of the table you want to check
+# The name of the table
 table_name = 'Logs'
 
 # SQL query to count the number of rows in the table
