@@ -6,5 +6,5 @@ route:
 receivers:
     - name: discord
       discord_configs:
-        - webhook_url: 'https://discord.com/api/webhooks/1261426821799477311/xcFC_PHbEl9WcvyLyeqS93U2IkMUWblEjur7HQymplV7jiHVmHwrE6vcAd-LkjT0miuI'
+        - webhook_url: 'ENTER KEY
           send_resolved: false
